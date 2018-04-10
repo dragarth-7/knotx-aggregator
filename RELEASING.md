@@ -11,6 +11,7 @@ mvn deploy -Poss-release
 git add .
 git commit -m "Releasing X.Y.Z"
 git tag X.Y.Z
+git push
 ```
 
 ## Release knot.x
@@ -29,8 +30,10 @@ git commit -m "Releasing X.Y.Z"
 git tag X.Y.Z
 ```
 
-## Release TBD
+## Release Knot.x distribution
+TBD
+- Get the knotx-stack-manager-{VER}.zip from central or from target/ and upload to bintray
+- Update the knotx.io download page ???
 
+## Release TBD module
 
-
-TBD: prepare shell script to automate git clonning all the repos
