@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.knotx</groupId>
+  <artifactId>knotx-releaser</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!--&lt;!&ndash; We release vertx-releaser locally &ndash;&gt;-->
+  <!--<distributionManagement>-->
+    <!--<repository>-->
+      <!--<id>local-repo</id>-->
+      <!--<name>LocalDir</name>-->
+      <!--<url>file://${project.basedir}/dist-maven</url>-->
+    <!--</repository>-->
+    <!--<snapshotRepository>-->
+      <!--<id>local-snapshot-repo</id>-->
+      <!--<name>local-snapshot</name>-->
+      <!--<url>file://${project.basedir}/dist-maven</url>-->
+    <!--</snapshotRepository>-->
+  <!--</distributionManagement>-->
+
+  <modules>
+    <module>knotx-repos/knotx-dependencies</module>
+    <module>knotx-repos/knotx</module>
+    <module>knotx-repos/knotx-bridge</module>
+    <module>knotx-repos/knotx-stack</module>
+    <module>knotx-repos/vertx-example-project</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
