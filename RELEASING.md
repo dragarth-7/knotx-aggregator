@@ -23,98 +23,36 @@ guide to get one).
        ...
    </servers>    
    ```
+   
+5. Assuming you have created account on [Docker Hub](https://hub.docker.com/) and you're assigned to the Knot.x organization, add server entry to your `settings.xml` to enable pushing to the docker registry.
+```xml
+	<server>
+		<id>registry.hub.docker.com</id>
+		<username>[Username]</username>
+		<password>[password]</password>
+	</server>
+```
+
+6. Bintray account created (to release Knot.x binary distributions)
 
 
 ## Procedure
 
-1. Clone repos
+1. Clone repos. (It will do a shallow clone of all repos being a subject of the release procedure)
 ```bash
 sh clone.sh
 ```
 
-
-
-TBD:
-docker:push of images
-push knotx distro to bintray
-
-update website
-
-# Validate release on staging repos
-
-## If release is ok
-Execute on each repo inside `knotx-repos`
-```
-$> git add .
-$> git commit -m "Releasing X.Y.Z"
-$> git tag X.Y.Z
-$> mvn nexus-staging:release
-$> mvn versions:set -DnewVersion=X.Y.NEXT-SNAPSHOT -DgenerateBackupPoms=false
-$> git add .
-$> git commit -m "Set new development version X.Y.NEXT-SNAPSHOT"
+2. Start release & provide the release version number
+```bash
+sh start-release.sh 1.3.0
 ```
 
-## If release is not OK
-```
-$> cd knotx-repos/knotx-dependencies
-$> mvn nexus-staging:drop
-```
+3. Validate release on staging repos
 
-
-
-
-
-
-## Release knotx-dependencies
-
-```
-git clone git@github.com:Knotx/knotx-dependencies.git
-cd knotx-dependencies
-mvn versions:set -DnewVersion=X.Y.Z -DgenerateBackupPoms=false
-
-mvn deploy -Poss-release
-git add .
-git commit -m "Releasing X.Y.Z"
-git tag X.Y.Z
-git push
+4. Close the release
+```bash
+sh close-release.sh 1.3.0 1.3.1-SNAPSHOT <bintrayUser> <bintrayToken>
 ```
 
-## Release knot.x
-Follow the [Knot.x Release process](https://github.com/Cognifide/knotx/blob/master/RELEASING.md)
-
-## Release knotx-stack
-```
-git clone git@github.com:Knotx/knotx-stack.git
-cd knotx-stack
-mvn versions:set -DnewVersion=X.Y.Z -DgenerateBackupPoms=false
-
-mvn deploy -Poss-release -DskipTests -Dgpg.passphrase="my pass phrase" -DaltDeploymentRepository=local::default
-
-git add .
-git commit -m "Releasing X.Y.Z"
-git tag X.Y.Z
-```
-
-## Release Knot.x distribution
-Distributing files via Bintray includes three steps: creating a version, uploading the files and publishing the files.
-Creating a version: Uploaded files are associated with a specific version of a package.
-Some upload methods can create the version automatically as part of the upload; with other methods you will need to create a target version from the Bintray UI or using REST.
-Uploading: Upload your files using one of the methods described in the "Uploading" section.
-After uploading your files, the files have a status of "un-published". This means that in the Bintray UI they are only visible to you and can only be downloaded with your username and API Key.
-You may discard all or some of your uploaded files when they are "un-published", before anyone sees or downloads them.
-Publishing: Once you are good to go, you can publish your files and make them visible and available to all Bintray users.
-Publishing can be done via REST (as part of the upload or separately) or using the UI (an unpublished content notice appears on your screen, with links to publish or discard the files).
-Some upload methods also allow you to publish your files automatically upon uploading, letting you skip the publishing step.
-
-
-curl -T knotx-X.Y.Z.zip -u<USER>:<API_KEY> https://api.bintray.com/content/knotx/downloads/distro/X.Y.Z/knotx-X.Y.Z.zip
-
-curl -T knotx-X.Y.Z.tar.gz -u<USER>:<API_KEY> https://api.bintray.com/content/knotx/downloads/distro/X.Y.Z/knotx-X.Y.Z.tar.gz
-
-
-TBD
-- Get the knotx-stack-manager-{VER}.zip from central or from target/ and upload to bintray
-- Update the knotx.io download page ???
-
-## Release TBD module
-
+5. TBD: update website - binary distro links

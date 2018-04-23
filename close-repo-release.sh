@@ -12,5 +12,6 @@ mvn -f knotx-repos/${PROJECT}/pom.xml versions:set -DnewVersion=${DEV_VERSION} -
 git add .
 git commit -m "Set next development version to ${DEV_VERSION}"
 
-echo "Push changes to repo"
+echo "Push changes to the repo"
+git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} push origin master
 git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} push --tags origin master

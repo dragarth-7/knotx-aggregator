@@ -4,6 +4,8 @@ USER="$1"
 TOKEN="$2"
 VERSION="$3"
 
+echo "#### Releasing knotx distribution to bintray ####"
+
 read -n1 -r -p "Go to bintray [https://bintray.com/knotx/downloads/distro] and create ${VERSION} version. Press 'Y' if ready ..." key
 if [ "$key" != 'Y' ]; then
   echo "Abort bintray upload"
