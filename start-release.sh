@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 VERSION="$1"
-SKIP_DOCKER="$2"
 
 echo "############# Start releases #############"
 
