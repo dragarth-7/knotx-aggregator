@@ -35,6 +35,18 @@ guide to get one).
 
 6. Bintray account created (to release Knot.x binary distributions)
 
+7. Update your `gradle.properties` with
+```
+signing.keyId=24875D73
+signing.password=secret
+signing.secretKeyRingFile=/Users/me/.gnupg/secring.gpg
+```
+and
+```
+ossrhUsername=your_sonatype_org_jira_username
+ossrhPassword=your_sonatype_org_jira_password
+```
+For releasing gradle repos.
 
 ## Procedure
 
