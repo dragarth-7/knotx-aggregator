@@ -8,7 +8,7 @@ echo "Releasing ${PROJECT} to central"
 # ToDo
 
 echo "Set next development version"
-sed -i "${X}s/.*/version=${DEV_VERSION}/g" knotx-repos/${PROJECT}/gradle.properties
+sed -i "1s/.*/version=${DEV_VERSION}/g" knotx-repos/${PROJECT}/gradle.properties
 
 git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} add .
 git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} commit -m "Set next development version to ${DEV_VERSION}"

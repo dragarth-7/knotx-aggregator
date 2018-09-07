@@ -4,10 +4,8 @@ PROJECT="$1"
 VERSION="$2"
 export GPG_TTY=$(tty)
 
-X="1"
-
 # Set release version
-sed -i "${X}s/.*/version=${VERSION}/g" knotx-repos/${PROJECT}/gradle.properties
+sed -i "1s/.*/version=${VERSION}/g" knotx-repos/${PROJECT}/gradle.properties
 
 # Release
 knotx-repos/${PROJECT}/gradlew publish
