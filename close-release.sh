@@ -16,9 +16,9 @@ if [[ -z "$SKIP_DOCKER" ]]; then
 fi
 sh release-distro.sh knotx-stack/knotx-stack-manager ${USER} ${TOKEN} ${VERSION}
 sh close-maven-repo-release.sh knotx-stack ${DEV_VERSION}
-sh close-maven-repo-release.sh example-project ${DEV_VERSION}
+sh close-maven-repo-release.sh knotx-example-project ${DEV_VERSION}
 
 sh close-gradle-repo-release.sh knotx-junit5 ${DEV_VERSION}
-sh close-gradle-repo-release.sh example-project ${DEV_VERSION}
+sh close-gradle-repo-release.sh knotx-data-bridget ${DEV_VERSION}
 
 echo "############# Release done #############"

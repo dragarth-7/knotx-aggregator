@@ -4,6 +4,10 @@ PROJECT="$1"
 VERSION="$2"
 export GPG_TTY=$(tty)
 
+echo "************************************************************"
+echo "Starting release of ${PROJECT} ${VERSION}"
+echo "************************************************************"
+
 # Set release version
 sed -i "1s/.*/version=${VERSION}/g" knotx-repos/${PROJECT}/gradle.properties
 

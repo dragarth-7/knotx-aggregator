@@ -5,6 +5,10 @@ VERSION="$2"
 WIKI="$3"
 export GPG_TTY=$(tty)
 
+echo "************************************************************"
+echo "Starting release of ${PROJECT} ${VERSION}"
+echo "************************************************************"
+
 mvn -f knotx-repos/${PROJECT}/pom.xml versions:set -DnewVersion=${VERSION} -DgenerateBackupPoms=false
 
 if [ "$WIKI" == "wiki" ]; then
