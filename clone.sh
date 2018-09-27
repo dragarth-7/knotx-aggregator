@@ -5,6 +5,9 @@ rm -rf knotx-repos
 # Knot.x dependencies
 git clone --depth 1 git@github.com:Knotx/knotx-dependencies.git knotx-repos/knotx-dependencies
 
+# Knot.x junit5 project
+git clone --depth 1 git@github.com:Knotx/knotx-junit5.git knotx-repos/knotx-junit5
+
 # Knot.x core
 git clone --depth 1 git@github.com:Cognifide/knotx.git knotx-repos/knotx
 
@@ -16,6 +19,3 @@ git clone --depth 1 git@github.com:Knotx/knotx-stack.git knotx-repos/knotx-stack
 
 # Knot.x example project
 git clone --depth 1 git@github.com:Knotx/knotx-example-project.git knotx-repos/knotx-example-project
-
-# Knot.x junit5 project
-git clone --depth 1 git@github.com:Knotx/knotx-junit5.git knotx-repos/knotx-junit5
