@@ -22,7 +22,7 @@ if [ "$WIKI" == "wiki" ]; then
   fi
 fi
 
-mvn -f knotx-repos/${PROJECT}/pom.xml clean deploy -Prelease -DskipDocker
+mvn -f knotx-repos/${PROJECT}/pom.xml clean deploy -Prelease
 git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} add .
 git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} commit -m "Releasing ${VERSION}"
 git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} tag ${VERSION}
