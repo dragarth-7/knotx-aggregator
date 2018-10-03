@@ -5,7 +5,9 @@ DEV_VERSION="$2"
 export GPG_TTY=$(tty)
 
 echo "Releasing ${PROJECT} to central"
-# ToDo
+# TODO close repo automatically
+# NOTICE: gradle pushes all artifacts released with gradle to a single staging repo (e.g. knotx-1560)
+# maven deploys each repo to separate staging repo
 
 echo "Set next development version"
 sed -i "1s/.*/version=${DEV_VERSION}/g" knotx-repos/${PROJECT}/gradle.properties

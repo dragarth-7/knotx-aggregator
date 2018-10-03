@@ -12,6 +12,7 @@ echo "************************************************************"
 sed -i "1s/.*/version=${VERSION}/g" knotx-repos/${PROJECT}/gradle.properties
 
 # Release
+knotx-repos/${PROJECT}/gradlew -p knotx-repos/${PROJECT} publishMavenJavaPublicationToMavenLocal
 knotx-repos/${PROJECT}/gradlew -p knotx-repos/${PROJECT} publish
 
 git --git-dir=knotx-repos/${PROJECT}/.git --work-tree=knotx-repos/${PROJECT} add .
