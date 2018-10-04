@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 
+echo "************************************************************"
+echo "Clearing knotx-repos workspace"
+echo "************************************************************"
+
 rm -rf knotx-repos
 
 # Knot.x dependencies
 git clone --depth 1 git@github.com:Knotx/knotx-dependencies.git knotx-repos/knotx-dependencies
 
+# Knot.x junit5 project
+git clone --depth 1 git@github.com:Knotx/knotx-junit5.git knotx-repos/knotx-junit5
+
 # Knot.x core
-git clone --depth 1 git@github.com:Cognifide/knotx.git -b milestone/backpressure-and-configs knotx-repos/knotx
+git clone --depth 1 git@github.com:Cognifide/knotx.git knotx-repos/knotx
 
 # Knot.x bridge
 git clone --depth 1 git@github.com:Knotx/knotx-data-bridge.git knotx-repos/knotx-data-bridge
