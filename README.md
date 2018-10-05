@@ -1,4 +1,14 @@
+# Development process
+This section describes tools that help you with coding. We provide scripts that allows to 
+clone all repositories and install artifacts to Maven local / Maven Central Snapshot repositories.
+
+## Clone all repositories
+
+Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option 
+for help.
+
 # Release process
+This section describes release process.
 
 ## Prerequisites
 1. Sonatype.org [JIRA](https://issues.sonatype.org/secure/Signup!default.jspa) account
@@ -49,6 +59,8 @@ ossrhPassword=your_sonatype_org_jira_password
 For releasing gradle repos.
 
 ## Procedure
+
+Go to the `release` catalogue and then: 
 
 1. Clone repos. (It will do a shallow clone of all repos being a subject of the release procedure)
 ```bash
