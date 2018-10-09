@@ -59,7 +59,7 @@ checkout() {
 
   if [[ -d $2 ]]; then
     if [[ $FORCE ]]; then
-      git --git-dir=$2/.git --work-tree=$2 reset HEAD --force
+      git --git-dir=$2/.git --work-tree=$2 reset HEAD --hard
     fi
     git --git-dir=$2/.git --work-tree=$2 fetch
   else
