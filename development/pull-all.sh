@@ -4,7 +4,7 @@
 # eval `ssh-agent`
 # ssh-add ~/.ssh/id_rsa
 
-while getopts hr:b:fc option
+while getopts hr:b:fcm: option
 do
   case "${option}"
     in
@@ -13,6 +13,7 @@ do
     b) BRANCH=${OPTARG};;
     f) FORCE=true;;
     c) CREATE=true;;
+    m) MERGE=${OPTARG};;
   esac
 done
 
@@ -33,17 +34,19 @@ fi
 # The command line help #
 #########################
 help() {
-    echo "Usage: $0 [option...] {start|stop|restart}" >&2
+    echo "Usage: $0 [option...] " >&2
     echo
     echo "   -r                         root folder path for all cloned repositories"
     echo "   -b                         GIT branch name"
     echo "   -c                         create GIT branch if not exists"
     echo "   -f                         reset all changes if repository is cloned"
+    echo "   -m                         merge / rebase with branch '-m original/master'"
     echo
     echo "Examples:"
-    echo "   sh pull-all.sh -r projects/knotx -b master                     clone (if not exists) all repositories to 'projects/knotx' folder and switch to master branch"
-    echo "   sh pull-all.sh -r projects/knotx -b feature/some-branch -c     clone (if not exists) all repositories to 'projects/knotx' folder and switch to 'feature/some-branch' (if not exists create the branch)"
-    echo "   sh pull-all.sh -r projects/knotx -b feature/some-branch -f     clone (if not exists) all repositories to 'projects/knotx' folder and switch to 'feature/some-branch' (discard all modifications)"
+    echo "   sh pull-all.sh -r projects/knotx -b master                                   clones (if not exists) all repositories to 'projects/knotx' folder and switches to master branch"
+    echo "   sh pull-all.sh -r projects/knotx -b feature/some-branch -c                   clones (if not exists) all repositories to 'projects/knotx' folder and switches to 'feature/some-branch' (if not exists create the branch)"
+    echo "   sh pull-all.sh -r projects/knotx -b feature/some-branch -f                   clones (if not exists) all repositories to 'projects/knotx' folder and switches to 'feature/some-branch' (discard all modifications)"
+    echo "   sh pull-all.sh -r projects/knotx -b feature/some-branch -m origin/master     clones (if not exists) all repositories to 'projects/knotx' folder, switches to 'feature/some-branch', rebases with 'origin/master', pushes changes"
     exit 1
 }
 
@@ -65,12 +68,23 @@ checkout() {
   else
     git clone "git@github.com:$1/$2.git"
   fi
-  git --git-dir=$2/.git --work-tree=$2 checkout master
+
+  # checks if branch exists, otherwise use master branch
   if [[ `git --git-dir=$2/.git --work-tree=$2 branch --list --all | grep $BRANCH` ]]; then
     git --git-dir=$2/.git --work-tree=$2 checkout $BRANCH
+    if [[ $MERGE ]]; then
+      git --git-dir=$2/.git --work-tree=$2 rebase $MERGE
+      git --git-dir=$2/.git --work-tree=$2 push
+    fi
   else
     if [[ $CREATE ]]; then
       git --git-dir=$2/.git --work-tree=$2 checkout -b $BRANCH
+      if [[ $MERGE ]]; then
+        git --git-dir=$2/.git --work-tree=$2 rebase $MERGE
+        git --git-dir=$2/.git --work-tree=$2 push
+      fi
+    else
+      git --git-dir=$2/.git --work-tree=$2 checkout master
     fi
   fi
   git --git-dir=$2/.git --work-tree=$2 pull

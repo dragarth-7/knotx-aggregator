@@ -14,7 +14,7 @@ done
 # The command line help #
 #########################
 help() {
-    echo "Usage: $0 [option...] {start|stop|restart}" >&2
+    echo "Usage: $0 [option...] " >&2
     echo
     echo "   -r                         root folder with cloned repositories"
     echo "   -d                         deploy to maven central snapshots"
