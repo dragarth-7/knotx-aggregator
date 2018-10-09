@@ -69,6 +69,9 @@ checkout() {
     git clone "git@github.com:$1/$2.git"
   fi
 
+  git --git-dir=$2/.git --work-tree=$2 checkout master
+  git --git-dir=$2/.git --work-tree=$2 pull
+
   # checks if branch exists, otherwise use master branch
   if [[ `git --git-dir=$2/.git --work-tree=$2 branch --list --all | grep $BRANCH` ]]; then
     git --git-dir=$2/.git --work-tree=$2 checkout $BRANCH
@@ -83,8 +86,6 @@ checkout() {
         git --git-dir=$2/.git --work-tree=$2 rebase $MERGE
         git --git-dir=$2/.git --work-tree=$2 push
       fi
-    else
-      git --git-dir=$2/.git --work-tree=$2 checkout master
     fi
   fi
   git --git-dir=$2/.git --work-tree=$2 pull
