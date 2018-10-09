@@ -85,11 +85,25 @@ IFS=$'\n' read -d '' -r -a repos < ../repositories.cfg
 
 cd $ROOT
 
+org=''
+project=''
 for repo in "${repos[@]}"
 do
-  checkout `echo "$repo" | cut -d';' -f1` `echo "$repo" | cut -d';' -f2`
+  org=`echo "$repo" | cut -d';' -f1`
+  project=`echo "$repo" | cut -d';' -f2`
+  checkout $org $project
 done
 
 echo "***************************************"
+echo "SUMMARY"
+echo "***************************************"
+
+for repo in "${repos[@]}"
+do
+  org=`echo "$repo" | cut -d';' -f1`
+  project=`echo "$repo" | cut -d';' -f2`
+  printf "%-30s %s\n" "$org/$project" `git --git-dir=$project/.git --work-tree=$project branch | grep \* | cut -d ' ' -f2`
+done
+
 echo "***************************************"
 echo "Finished!"
