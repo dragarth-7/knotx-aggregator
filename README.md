@@ -7,6 +7,31 @@ clone all repositories and install artifacts to Maven local / Maven Central Snap
 Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option 
 for help.
 
+## Build all repositories
+
+Check a `development/build-all.sh` script to build all cloned repositories. Please check `-h` option 
+for help.
+
+## Use cases
+
+### Install all to M2 repository
+```
+$> sh pull-all.sh -r projects/knotx -b master
+$> sh build-all.sh -r projects/knotx
+```
+
+### Deploy all to SNAPSHOT repository
+```
+$> sh pull-all.sh -r projects/knotx -b master -f
+$> sh build-all.sh -r projects/knotx -d
+```
+
+### Install my changes to M2 repository
+```
+$> sh pull-all.sh -r projects/knotx -b feature/my-changes
+$> sh build-all.sh -r projects/knotx
+```
+
 # Release process
 This section describes release process.
 
