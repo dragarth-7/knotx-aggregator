@@ -1,4 +1,53 @@
+# Development process
+This section describes tools that help you with coding. We provide scripts that allows to 
+clone all repositories and install artifacts to Maven local / Maven Central Snapshot repositories.
+
+## Prerequisites
+```
+$>git clone git@github.com:Knotx/knotx-aggregator.git
+$>chmod -R 755 knotx-aggregator/**/*.sh
+```
+
+## Scripts
+
+### Clone all repositories
+
+Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option 
+for help.
+
+### Build all repositories
+
+Check a `development/build-all.sh` script to build all cloned repositories. Please check `-h` option 
+for help.
+
+### Use cases
+After cloning the repository on Unix please change permissions:
+
+```
+$>git clone git@github.com:Knotx/knotx-aggregator.git
+$>chmod -R 755 knotx-aggregator/**/*.sh
+```
+
+### Install all to M2 repository
+```
+$>./pull-all.sh -r projects/knotx -b master
+$>./build-all.sh -r projects/knotx
+```
+
+### Deploy all to SNAPSHOT repository
+```
+$>./pull-all.sh -r projects/knotx -b master -f
+$>./build-all.sh -r projects/knotx -d
+```
+
+### Install my changes to M2 repository
+```
+$>./pull-all.sh -r projects/knotx -b feature/my-changes
+$>./build-all.sh -r projects/knotx
+```
+
 # Release process
+This section describes release process.
 
 ## Prerequisites
 1. Sonatype.org [JIRA](https://issues.sonatype.org/secure/Signup!default.jspa) account
@@ -49,6 +98,8 @@ ossrhPassword=your_sonatype_org_jira_password
 For releasing gradle repos.
 
 ## Procedure
+
+Go to the `release` catalogue and then: 
 
 1. Clone repos. (It will do a shallow clone of all repos being a subject of the release procedure)
 ```bash
