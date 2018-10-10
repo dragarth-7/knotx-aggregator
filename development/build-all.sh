@@ -28,28 +28,28 @@ help() {
 #       Maven build        #
 ############################
 build_with_maven () {
+  # S1 root folder
+  # $2 deploy
   echo "Building [$1] with deploy [$2]"
-  cd $1
   if [[ $2 ]]; then
-    mvn clean install deploy
+    mvn -f $1/pom.xml clean install deploy
   else
-    mvn clean install
+    mvn -f $1/pom.xml clean install
   fi
-  cd ..
 }
 
 ############################
 #      Gradle build        #
 ############################
 build_with_gradle () {
+  # $1 root folder
+  # $2 deploy
   echo "Building [$1] with deploy [$2]"
-  cd $1
   if [[ $2 ]]; then
-    ./gradlew clean build publish --rerun-tasks
+    $1/gradlew -p $1 clean build publish --rerun-tasks
   else
-    ./gradlew clean build publishToMavenLocal --rerun-tasks
+    $1/gradlew -p $1 clean build publishToMavenLocal --rerun-tasks
   fi
-  cd ..
 }
 
 
