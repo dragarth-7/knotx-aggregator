@@ -2,25 +2,17 @@
 This section describes tools that help you with coding. We provide scripts that allows to 
 clone all repositories and install artifacts to Maven local / Maven Central Snapshot repositories.
 
-## Prerequisites
-```
-$>git clone git@github.com:Knotx/knotx-aggregator.git
-$>chmod -R 755 knotx-aggregator/**/*.sh
-```
-
-## Scripts
-
-### Clone all repositories
+## Clone all repositories
 
 Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option 
 for help.
 
-### Build all repositories
+## Build all repositories
 
 Check a `development/build-all.sh` script to build all cloned repositories. Please check `-h` option 
 for help.
 
-### Use cases
+## Use cases
 After cloning the repository on Unix please change permissions:
 
 ```
@@ -28,22 +20,16 @@ $>git clone git@github.com:Knotx/knotx-aggregator.git
 $>chmod -R 755 knotx-aggregator/**/*.sh
 ```
 
-### Install all to M2 repository
+### Install my changes to M2 repository
 ```
-$>./pull-all.sh -r projects/knotx -b master
+$>./pull-all.sh -r projects/knotx -b feature/my-changes -m origin/master
 $>./build-all.sh -r projects/knotx
 ```
 
-### Deploy all to SNAPSHOT repository
+### Deploy all to Maven Central SNAPSHOT repository
 ```
 $>./pull-all.sh -r projects/knotx -b master -f
 $>./build-all.sh -r projects/knotx -d
-```
-
-### Install my changes to M2 repository
-```
-$>./pull-all.sh -r projects/knotx -b feature/my-changes
-$>./build-all.sh -r projects/knotx
 ```
 
 # Release process
