@@ -7,7 +7,7 @@ start_gradle_repo_release() {
   echo "Starting release of ${project} ${version}"
 
   # Set release version
-  sed -i "1s/.*/version=${version}/g" knotx-repos/${project}/gradle.properties
+  sed -i "/version/c version=${version}" knotx-repos/${project}/gradle.properties
 
   # Release
   knotx-repos/${project}/gradlew -p knotx-repos/${project} publishMavenJavaPublicationToMavenLocal
@@ -29,7 +29,7 @@ close_gradle_repo_release() {
   # maven deploys each repo to separate staging repo
 
   echo "Set next development version to ${dev_version}"
-  sed -i "1s/.*/version=${dev_version}/g" knotx-repos/${project}/gradle.properties
+  sed -i "/version/c version=${dev_version}" knotx-repos/${project}/gradle.properties
 
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} add .
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} commit -m "Set next development version to ${dev_version}"
