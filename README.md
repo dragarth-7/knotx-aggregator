@@ -84,8 +84,7 @@ ossrhPassword=your_sonatype_org_jira_password
 For releasing gradle repos.
 
 ## Procedure
-
-Go to the `release` catalogue and then:
+From the repository top directory execute following commands:
 
 1. Clone repos. (It will do a shallow clone of all repos being a subject of the release procedure)
 ```bash
