@@ -4,22 +4,24 @@ VERSION="$1"
 DEV_VERSION="$2"
 USER="$3"
 TOKEN="$4"
+CURRENT_DIR="$(dirname "${0}")/"
+
+. "$CURRENT_DIR"helpers/maven-repo-release.sh
+. "$CURRENT_DIR"/helpers/gradle-repo-release.sh
+. "$CURRENT_DIR"/helpers/bintray-upload.sh
 
 echo "############# Closing the release #############"
 
-sh close-maven-repo-release.sh knotx-dependencies ${DEV_VERSION}
-sh close-gradle-repo-release.sh knotx-junit5 ${DEV_VERSION}
-sh close-maven-repo-release.sh knotx ${DEV_VERSION}
+close_maven_repo_release knotx-dependencies ${DEV_VERSION}
+close_gradle_repo_release knotx-junit5 ${DEV_VERSION}
+close_maven_repo_release knotx ${DEV_VERSION}
 
-# TODO fix this
-# if [[ -z "$SKIP_DOCKER" ]]; then
-#   sh release-docker.sh knotx-stack/knotx-docker
-# fi
+close_gradle_repo_release knotx-forms ${DEV_VERSION}
+close_gradle_repo_release knotx-data-bridge ${DEV_VERSION}
+close_gradle_repo_release knotx-template-engine ${DEV_VERSION}
 
-sh close-gradle-repo-release.sh knotx-data-bridge ${DEV_VERSION}
-
-sh release-upload-to-bintray.sh ${USER} ${TOKEN} ${VERSION}
-sh close-maven-repo-release.sh knotx-stack ${DEV_VERSION}
-sh close-maven-repo-release.sh knotx-example-project ${DEV_VERSION}
+upload_to_bintray ${USER} ${TOKEN} ${VERSION}
+close_maven_repo_release knotx-stack ${DEV_VERSION}
+close_maven_repo_release knotx-example-project ${DEV_VERSION}
 
 echo "############# Release done #############"
