@@ -123,3 +123,4 @@ sh release/close-release.sh 1.5.0 1.5.1-SNAPSHOT <bintrayUser> <bintrayToken>
   - binary distro links
   - `index` version
   - produce `blog/release-VERSION/` page that consists of all `CHANGELOG.md` changes for every module
+  - deploy `SNAPSHOT` versions after release to make development of new versions possible and satisfy failing travis
