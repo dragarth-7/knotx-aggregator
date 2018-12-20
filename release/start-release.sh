@@ -3,18 +3,23 @@
 VERSION="$1"
 CURRENT_DIR="$(dirname "${0}")/"
 
-. "$CURRENT_DIR"helpers/maven-repo-release.sh
-. "$CURRENT_DIR"/helpers/gradle-repo-release.sh
+# ToDo - better way to manage scripts includes
+. "$CURRENT_DIR"helpers/git-release.sh
+. "$CURRENT_DIR"helpers/github-release.sh
+. "$CURRENT_DIR"helpers/maven-release.sh
+. "$CURRENT_DIR"helpers/gradle-release.sh
 
 echo "############# Start releases #############"
 
-start_maven_repo_release knotx-dependencies ${VERSION}
-start_gradle_repo_release knotx-junit5 ${VERSION}
-start_maven_repo_release knotx ${VERSION} wiki
-start_gradle_repo_release knotx-forms ${VERSION}
-start_gradle_repo_release knotx-data-bridge ${VERSION}
-start_gradle_repo_release knotx-template-engine ${VERSION}
-start_maven_repo_release knotx-stack ${VERSION}
-start_maven_repo_release knotx-example-project ${VERSION}
+maven_start_release knotx-dependencies ${VERSION}
+gradle_start_release knotx-junit5 ${VERSION}
+maven_start_release knotx ${VERSION} wiki
+gradle_start_release knotx-forms ${VERSION}
+gradle_start_release knotx-data-bridge ${VERSION}
+gradle_start_release knotx-template-engine ${VERSION}
+maven_start_release knotx-stack ${VERSION}
+# Set version in gradle in example project
+gradle_set_project_version knotx-example-project ${VERSION}
+maven_start_release knotx-example-project ${VERSION}
 
 echo "############# Release prepared #############"

@@ -1,35 +1,27 @@
 #!/usr/bin/env bash
 
-start_maven_repo_release() {
-  echo "************************************************************"
+git_commit_and_create_tag() {
   local project="$1"
   local version="$2"
-  echo "Starting release of ${project} ${version}"
 
-  mvn -f knotx-repos/${project}/pom.xml versions:set -DnewVersion=${version} -DgenerateBackupPoms=false
-
-  mvn -f knotx-repos/${project}/pom.xml clean deploy -Prelease -DskipDocker
+  echo "Generating new vesion tag"
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} add .
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} commit -m "Releasing ${version}"
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} tag ${version}
-  echo "************************************************************"
 }
 
-close_maven_repo_release() {
-  echo "************************************************************"
+git_set_next_dev_version() {
   local project="$1"
   local dev_version="$2"
 
-  echo "Releasing ${project} to central"
-  mvn -f knotx-repos/${project}/pom.xml nexus-staging:release
-
-  echo "Set next development version to ${dev_version}"
-  mvn -f knotx-repos/${project}/pom.xml versions:set -DnewVersion=${dev_version} -DgenerateBackupPoms=false
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} add .
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} commit -m "Set next development version to ${dev_version}"
+}
+
+git_push_changes() {
+  local project="$1"
 
   echo "Push changes to the repo"
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} push origin master
   git --git-dir=knotx-repos/${project}/.git --work-tree=knotx-repos/${project} push --tags origin master
-  echo "************************************************************"
 }
