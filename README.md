@@ -116,3 +116,10 @@ sh release/close-release.sh 1.5.0 1.5.1-SNAPSHOT <bintrayUser> <bintrayToken>
   - update website - binary distro links
   - update wiki
   - publish release blog
+
+## ToDo
+- automatically close and promote repos released by gradle manually at oss.sonatype.org
+- update `knotx-website`
+  - binary distro links
+  - `index` version
+  - produce `blog/release-VERSION/` page that consists of all `CHANGELOG.md` changes for every module
