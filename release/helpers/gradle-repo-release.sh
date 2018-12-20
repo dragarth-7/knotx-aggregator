@@ -23,9 +23,9 @@ close_gradle_repo_release() {
   echo "************************************************************"
   project="$1"
   dev_version="$2"
-  echo "Releasing ${project} to central"
+  # echo "Releasing ${project} to central"
   # TODO close repo automatically
-  # NOTICE: gradle pushes all artifacts released with gradle to a single staging repo (e.g. knotx-1560)
+  # NOTICE: gradle pushes more than one artifacts released with gradle to a single staging repo (e.g. knotx-1560)
   # maven deploys each repo to separate staging repo
 
   echo "Set next development version to ${dev_version}"

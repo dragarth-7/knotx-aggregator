@@ -111,6 +111,7 @@ sh release/close-release.sh 1.5.0 1.5.1-SNAPSHOT <bintrayUser> <bintrayToken>
 ```
 
 6. Manual actions:
+  - close and promote repos released by gradle manually at oss.sonatype.org
   - publish bintray files
   - update website - binary distro links
   - update wiki
