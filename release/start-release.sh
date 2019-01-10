@@ -19,6 +19,7 @@ gradle_start_release knotx-data-bridge ${VERSION}
 gradle_start_release knotx-template-engine ${VERSION}
 maven_start_release knotx-stack ${VERSION}
 # Set version in gradle in example project
+# TODO: release example using gradle to resolve stack dependencies properly, remember to update maven version
 gradle_set_project_version knotx-example-project ${VERSION}
 maven_start_release knotx-example-project ${VERSION}
 
