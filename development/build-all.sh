@@ -46,9 +46,13 @@ build_with_gradle () {
   # $2 deploy
   echo "Building [$1] with deploy [$2]"
   if [[ $2 ]]; then
-    $1/gradlew -p $1 clean build publish --rerun-tasks
+    $1/gradlew -p $1 clean --rerun-tasks
+    $1/gradlew -p $1 --rerun-tasks
+    $1/gradlew -p $1 publish --rerun-tasks
   else
-    $1/gradlew -p $1 clean build publishToMavenLocal --rerun-tasks
+    $1/gradlew -p $1 clean --rerun-tasks
+    $1/gradlew -p $1 --rerun-tasks
+    $1/gradlew -p $1 publishToMavenLocal --rerun-tasks
   fi
 }
 
