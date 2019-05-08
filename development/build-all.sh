@@ -30,7 +30,9 @@ help() {
 build_with_maven () {
   # S1 root folder
   # $2 deploy
-  echo "Building [$1] with deploy [$2]"
+  echo "***************************************"
+  echo "* Building [$1] using maven with deploy [$2]"
+  echo "***************************************"
   if [[ $2 ]]; then
     mvn -f $1/pom.xml clean install deploy
   else
@@ -44,7 +46,9 @@ build_with_maven () {
 build_with_gradle () {
   # $1 root folder
   # $2 deploy
-  echo "Building [$1] with deploy [$2]"
+  echo "***************************************"
+  echo "* Building [$1] using gradle with deploy [$2]"
+  echo "***************************************"
   if [[ $2 ]]; then
     $1/gradlew -p $1 clean --rerun-tasks
     $1/gradlew -p $1 --rerun-tasks
