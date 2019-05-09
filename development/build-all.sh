@@ -24,6 +24,13 @@ help() {
     exit 1
 }
 
+fail_fast_build () {
+  if (( $1 != 0 )); then
+    echo "Building [$2] failed!" >&2
+    exit 1
+  fi
+}
+
 ############################
 #       Maven build        #
 ############################
@@ -34,9 +41,9 @@ build_with_maven () {
   echo "* Building [$1] using maven with deploy [$2]"
   echo "***************************************"
   if [[ $2 ]]; then
-    mvn -f $1/pom.xml clean install deploy
+    mvn -f $1/pom.xml clean install deploy; fail_fast_build $? $1
   else
-    mvn -f $1/pom.xml clean install
+    mvn -f $1/pom.xml clean install; fail_fast_build $? $1
   fi
 }
 
@@ -50,13 +57,9 @@ build_with_gradle () {
   echo "* Building [$1] using gradle with deploy [$2]"
   echo "***************************************"
   if [[ $2 ]]; then
-    $1/gradlew -p $1 clean --rerun-tasks
-    $1/gradlew -p $1 --rerun-tasks
-    $1/gradlew -p $1 publish --rerun-tasks
+    $1/gradlew -p $1 clean build publish --rerun-tasks; fail_fast_build $? $1
   else
-    $1/gradlew -p $1 clean --rerun-tasks
-    $1/gradlew -p $1 --rerun-tasks
-    $1/gradlew -p $1 publishToMavenLocal --rerun-tasks
+    $1/gradlew -p $1 clean build publishToMavenLocal --rerun-tasks; fail_fast_build $? $1
   fi
 }
 
