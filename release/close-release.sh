@@ -15,16 +15,29 @@ CURRENT_DIR="$(dirname "${0}")/"
 
 echo "############# Closing the release #############"
 
-maven_close_release knotx-dependencies ${DEV_VERSION}
-gradle_close_release knotx-junit5 ${DEV_VERSION}
-maven_close_release knotx ${DEV_VERSION}
+repos=()
+IFS=$'\n' read -d '' -r -a repos < to-release.cfg
 
-gradle_close_release knotx-forms ${DEV_VERSION}
-gradle_close_release knotx-data-bridge ${DEV_VERSION}
-gradle_close_release knotx-template-engine ${DEV_VERSION}
+org=''
+project=''
+operation=''
 
-upload_to_bintray ${USER} ${TOKEN} ${VERSION}
-maven_close_release knotx-stack ${DEV_VERSION}
-maven_close_release knotx-example-project ${DEV_VERSION}
+for repo in "${repos[@]}"
+do
+  org=`echo "$repo" | cut -d';' -f1`
+  project=`echo "$repo" | cut -d';' -f2`
+
+  if [[ -f "knotx-repos/$project/pom.xml" ]]; then
+    operation="Closing release of Maven repo $project"
+    echo "$opeartion"
+    maven_close_release $project ${DEV_VERSION}; fail_fast_operation $? "$operation"
+  else
+    operation="Closing release of Gradle repo $project"
+    echo "$opeartion"
+    gradle_close_release $project ${DEV_VERSION}; fail_fast_operation $? "$operation"
+  fi
+
+  echo "______________________________________________________________________"
+done
 
 echo "############# Release done #############"

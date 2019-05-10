@@ -1,31 +1,30 @@
 #!/usr/bin/env bash
 
+CURRENT_DIR="$(dirname "${0}")/"
+
+# ToDo - better way to manage scripts includes
+. "$CURRENT_DIR"helpers/misc.sh
+
 echo "************************************************************"
-echo "Clearing knotx-repos workspace"
+echo "Cloning knotx repositories to release workspace"
 echo "************************************************************"
 
 rm -rf knotx-repos
 
-# Knot.x dependencies
-git clone --depth 1 git@github.com:Knotx/knotx-dependencies.git knotx-repos/knotx-dependencies
+repos=()
+IFS=$'\n' read -d '' -r -a repos < to-release.cfg
 
-# Knot.x junit5 project
-git clone --depth 1 git@github.com:Knotx/knotx-junit5.git knotx-repos/knotx-junit5
+org=''
+project=''
 
-# Knot.x core
-git clone --depth 1 git@github.com:Cognifide/knotx.git knotx-repos/knotx
+for repo in "${repos[@]}"
+do
+  org=`echo "$repo" | cut -d';' -f1`
+  project=`echo "$repo" | cut -d';' -f2`
 
-# Knot.x forms
-git clone --depth 1 git@github.com:Knotx/knotx-forms.git knotx-repos/knotx-forms
+  operation="Cloning: $org/$project to knotx-repos/$project"
+  echo "$operation"
 
-# Knot.x bridge
-git clone --depth 1 git@github.com:Knotx/knotx-data-bridge.git knotx-repos/knotx-data-bridge
-
-# Knot.x template engine
-git clone --depth 1 git@github.com:Knotx/knotx-template-engine.git knotx-repos/knotx-template-engine
-
-# Knot.x stack
-git clone --depth 1 git@github.com:Knotx/knotx-stack.git knotx-repos/knotx-stack
-
-# Knot.x example project
-git clone --depth 1 git@github.com:Knotx/knotx-example-project.git knotx-repos/knotx-example-project
+  git clone --depth 1 "git@github.com:$org/$project.git" "knotx-repos/$project"; fail_fast_operation $? "$operation"
+  echo "______________________________________________________________________"
+done

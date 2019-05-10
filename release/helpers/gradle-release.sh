@@ -7,11 +7,11 @@ gradle_start_release() {
   echo "Starting release of ${project} ${version}"
 
   # Set release version
-  set_project_version $project $version
-  update_changelog $project $version
+  gradle_set_project_version $project $version
+#  update_changelog $project $version
 
   # Release
-  knotx-repos/${project}/gradlew -p knotx-repos/${project} publishMavenJavaPublicationToMavenLocal
+  # knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal
   knotx-repos/${project}/gradlew -p knotx-repos/${project} publish
 
   git_commit_and_create_tag $project $version
@@ -40,5 +40,6 @@ gradle_set_project_version() {
   project="$1"
   version="$2"
 
-  sed -i "/version/c version=${version}" knotx-repos/${project}/gradle.properties
+  # FixMe this requires `brew install gnu-sed`
+  gsed -i "/version/c version=${version}" knotx-repos/${project}/gradle.properties
 }

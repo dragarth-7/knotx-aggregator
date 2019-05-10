@@ -8,19 +8,40 @@ CURRENT_DIR="$(dirname "${0}")/"
 . "$CURRENT_DIR"helpers/github-release.sh
 . "$CURRENT_DIR"helpers/maven-release.sh
 . "$CURRENT_DIR"helpers/gradle-release.sh
+. "$CURRENT_DIR"helpers/misc.sh
 
 echo "############# Start releases #############"
 
-maven_start_release knotx-dependencies ${VERSION}
-gradle_start_release knotx-junit5 ${VERSION}
-maven_start_release knotx ${VERSION} wiki
-gradle_start_release knotx-forms ${VERSION}
-gradle_start_release knotx-data-bridge ${VERSION}
-gradle_start_release knotx-template-engine ${VERSION}
-maven_start_release knotx-stack ${VERSION}
-# Set version in gradle in example project
-# TODO: release example using gradle to resolve stack dependencies properly, remember to update maven version
-gradle_set_project_version knotx-example-project ${VERSION}
-maven_start_release knotx-example-project ${VERSION}
+export GPG_TTY=$(tty)
+
+echo "Clearing caches"
+# ToDo make it optional
+rm -rf ~/.m2/repository/io/knotx/
+rm -rf ~/.gradle/caches/*
+
+repos=()
+IFS=$'\n' read -d '' -r -a repos < to-release.cfg
+
+org=''
+project=''
+operation=''
+
+for repo in "${repos[@]}"
+do
+  org=`echo "$repo" | cut -d';' -f1`
+  project=`echo "$repo" | cut -d';' -f2`
+
+  if [[ -f "knotx-repos/$project/pom.xml" ]]; then
+    operation="Releasing Maven repo $project"
+    echo "$opeartion"
+    maven_start_release $project ${VERSION}; fail_fast_operation $? "$operation"
+  else
+    operation="Releasing Gradle repo $project"
+    echo "$opeartion"
+    gradle_start_release $project ${VERSION}; fail_fast_operation $? "$operation"
+  fi
+
+  echo "______________________________________________________________________"
+done
 
 echo "############# Release prepared #############"
