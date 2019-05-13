@@ -12,7 +12,7 @@ gradle_start_release() {
 
   # Release
   # knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal
-  knotx-repos/${project}/gradlew -p knotx-repos/${project} publish
+  knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal publish
 
   git_commit_and_create_tag $project $version
   echo "************************************************************"
@@ -28,7 +28,7 @@ gradle_close_release() {
   # maven deploys each repo to separate staging repo
 
   echo "Set next development version to ${dev_version}"
-  set_project_version $project $dev_version
+  gradle_set_project_version $project $dev_version
 
   git_set_next_dev_version $project $dev_version
 

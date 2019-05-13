@@ -12,6 +12,7 @@ CURRENT_DIR="$(dirname "${0}")/"
 . "$CURRENT_DIR"helpers/maven-release.sh
 . "$CURRENT_DIR"helpers/gradle-release.sh
 . "$CURRENT_DIR"helpers/bintray-upload.sh
+. "$CURRENT_DIR"helpers/misc.sh
 
 echo "############# Closing the release #############"
 

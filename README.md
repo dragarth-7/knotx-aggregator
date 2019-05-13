@@ -82,6 +82,12 @@ ossrhUsername=your_sonatype_org_jira_username
 ossrhPassword=your_sonatype_org_jira_password
 ```
 For releasing gradle repos.
+Also add
+```
+org.gradle.internal.http.connectionTimeout=60000
+org.gradle.internal.http.socketTimeout=300000
+```
+To fix the read timeouts gradle issue.
 
 ## Procedure
 From the repository top directory execute following commands:
@@ -93,7 +99,7 @@ sh release/clone.sh
 
 2. Start release & provide the release version number
 ```bash
-sh release/start-release.sh 1.5.0
+sh release/start-release.sh 2.0.0
 ```
 
 3. Validate release on staging repos
