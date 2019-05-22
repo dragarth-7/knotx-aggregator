@@ -56,10 +56,15 @@ build_with_gradle () {
   echo "***************************************"
   echo "* Building [$1] using gradle with deploy [$2]"
   echo "***************************************"
+  $1/gradlew -p $1 clean build --rerun-tasks; fail_fast_build $? $1
+
+  echo "***************************************"
+  echo "* Publishing [$1]"
+  echo "***************************************"
   if [[ $2 ]]; then
-    $1/gradlew -p $1 clean build publish --rerun-tasks; fail_fast_build $? $1
+    $1/gradlew -p $1 publish-all; fail_fast_build $? $1
   else
-    $1/gradlew -p $1 clean build publishToMavenLocal --rerun-tasks; fail_fast_build $? $1
+    $1/gradlew -p $1 publish-local-all; fail_fast_build $? $1
   fi
 }
 
@@ -67,18 +72,11 @@ build_with_gradle () {
 #########################
 #       Execute         #
 #########################
-repos=()
-IFS=$'\n' read -d '' -r -a repos < ../repositories.cfg
+cd ${ROOT}
+touch knotx-stack/knotx-it-tests/.composite-enabled
 
-cd $ROOT
-
-for repo in "${repos[@]}"
-do
-  if [ ! -f `echo "$repo" | cut -d';' -f2`/pom.xml ]; then
-    build_with_gradle `echo "$repo" | cut -d';' -f2` $DEPLOY
-  else
-    build_with_maven `echo "$repo" | cut -d';' -f2` $DEPLOY
-  fi
-done
+build_with_maven `echo "knotx-dependencies" | cut -d';' -f2` $DEPLOY
+build_with_gradle `echo "knotx-stack/knotx-it-tests" | cut -d';' -f2` $DEPLOY
+build_with_maven `echo "knotx-stack" | cut -d';' -f2` $DEPLOY
 
 echo "Finished!"

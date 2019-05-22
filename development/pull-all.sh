@@ -120,5 +120,8 @@ do
   printf "%-30s %s\n" "$org/$project" `git --git-dir=$project/.git --work-tree=$project branch | grep \* | cut -d ' ' -f2`
 done
 
+cd knotx-stack/knotx-it-tests
+touch .composite-enabled
+
 echo "***************************************"
 echo "Finished!"
