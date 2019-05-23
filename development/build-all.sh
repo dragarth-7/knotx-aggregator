@@ -73,10 +73,9 @@ build_with_gradle () {
 #       Execute         #
 #########################
 cd ${ROOT}
-touch knotx-stack/knotx-it-tests/.composite-enabled
+touch ${ROOT}/knotx-stack/.composite-enabled
 
 build_with_maven `echo "knotx-dependencies" | cut -d';' -f2` $DEPLOY
-build_with_gradle `echo "knotx-stack/knotx-it-tests" | cut -d';' -f2` $DEPLOY
-build_with_maven `echo "knotx-stack" | cut -d';' -f2` $DEPLOY
+build_with_gradle `echo "knotx-stack" | cut -d';' -f2` $DEPLOY
 
 echo "Finished!"
