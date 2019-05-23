@@ -10,6 +10,11 @@ for help.
 Check a `development/build-all.sh` script to build all cloned repositories. Please check `-h` option
 for help.
 
+Please note that the `knotx-stack` repository contains 
+[Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) definition. 
+The repository allows to re-build all Knot.x modules and use them during integration tests, bypassing the 
+need to publish artifacts to the maven repository first.
+
 ## Use cases
 After cloning the repository on Unix please change permissions:
 
