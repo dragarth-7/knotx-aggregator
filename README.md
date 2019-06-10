@@ -10,9 +10,9 @@ for help.
 Check a `development/build-all.sh` script to build all cloned repositories. Please check `-h` option
 for help.
 
-Please note that the `knotx-stack` repository contains 
-[Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) definition. 
-The repository allows to re-build all Knot.x modules and use them during integration tests, bypassing the 
+Please note that the `knotx-stack` repository contains
+[Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) definition.
+The repository allows to re-build all Knot.x modules and use them during integration tests, bypassing the
 need to publish artifacts to the maven repository first.
 
 ## Use cases
@@ -95,30 +95,33 @@ org.gradle.internal.http.socketTimeout=300000
 To fix the read timeouts gradle issue.
 
 ## Procedure
-From the repository top directory execute following commands:
+> Prerequisites
+> Install [Mac OSX/Gsed](http://gridlab-d.shoutwiki.com/wiki/Mac_OSX/Gsed)
+
+From the repository `release` directory execute following commands:
 
 1. Clone repos. (It will do a shallow clone of all repos being a subject of the release procedure)
 ```bash
-sh release/clone.sh
+./clone.sh
 ```
 
 2. Start release & provide the release version number
 ```bash
-sh release/start-release.sh 2.0.0
+./start-release.sh 2.0.0
 ```
 
 3. Validate release on staging repos
 
 4. Release docker image:
 ```bash
-sh release/release-docker.sh knotx-stack/knotx-docker
+./release-docker.sh
 ```
 
 5. Close the release
 Create manually new versions for `examples` and `distro` packages at bintray.
 Run:
 ```bash
-sh release/close-release.sh 1.5.0 1.5.1-SNAPSHOT <bintrayUser> <bintrayToken>
+./close-release.sh 1.5.0 1.5.1-SNAPSHOT <bintrayUser> <bintrayToken>
 ```
 
 6. Manual actions:
