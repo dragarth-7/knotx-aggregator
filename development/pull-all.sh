@@ -68,6 +68,7 @@ checkout() {
     git --git-dir=$2/.git --work-tree=$2 fetch
   else
     if [[ $AUTH_HEADER ]]; then
+      echo "CI clone option with token $AUTH_HEADER"
       git -c http.extraheader="AUTHORIZATION: bearer $AUTH_HEADER" clone "https://github.com:$1/$2.git"
     else
       git clone "git@github.com:$1/$2.git"
