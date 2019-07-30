@@ -14,12 +14,11 @@ do
     f) FORCE=true;;
     c) CREATE=true;;
     m) MERGE=${OPTARG};;
-    a) AUTH_TOKEN=${OPTARG};;
+    a) HTTPS=true;;
   esac
 done
 
 echo "Script root catalogue [$ROOT]"
-echo "Script root catalogue [$AUTH_TOKEN]"
 
 if [[ $FORCE ]]; then
   while true; do
@@ -68,7 +67,7 @@ checkout() {
     fi
     git --git-dir=$2/.git --work-tree=$2 fetch
   else
-    if [[ -z "$AUTH_TOKEN" ]]; then
+    if [[ $HTTPS ]]; then
       git clone "https://github.com/$1/$2.git"
     else
       git clone "git@github.com:$1/$2.git"
