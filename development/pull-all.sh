@@ -19,6 +19,7 @@ do
 done
 
 echo "Script root catalogue [$ROOT]"
+echo "Script root catalogue [$AUTH_TOKEN]"
 
 if [[ $FORCE ]]; then
   while true; do
@@ -68,7 +69,7 @@ checkout() {
     git --git-dir=$2/.git --work-tree=$2 fetch
   else
     if [[ -z "$AUTH_TOKEN" ]]; then
-      git -c http.extraheader="AUTHORIZATION: bearer $AUTH_TOKEN" clone "https://github.com/$1/$2.git"
+      git clone "https://github.com/$1/$2.git"
     else
       git clone "git@github.com:$1/$2.git"
     fi
