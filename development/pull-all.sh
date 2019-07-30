@@ -4,7 +4,7 @@
 # eval `ssh-agent`
 # ssh-add ~/.ssh/id_rsa
 
-while getopts hr:b:fcm: option
+while getopts hr:b:fcm:a option
 do
   case "${option}"
     in
@@ -14,6 +14,7 @@ do
     f) FORCE=true;;
     c) CREATE=true;;
     m) MERGE=${OPTARG};;
+    a) HTTP=${OPTARG};;
   esac
 done
 
@@ -66,7 +67,11 @@ checkout() {
     fi
     git --git-dir=$2/.git --work-tree=$2 fetch
   else
-    git clone "git@github.com:$1/$2.git"
+    if [[ $HTTP ]]; then
+      git clone "https://github.com:$1/$2.git"
+    else
+      git clone "git@github.com:$1/$2.git"
+    fi
   fi
 
   git --git-dir=$2/.git --work-tree=$2 checkout master
