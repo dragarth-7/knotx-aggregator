@@ -14,7 +14,7 @@ do
     f) FORCE=true;;
     c) CREATE=true;;
     m) MERGE=${OPTARG};;
-    a) HTTP=${OPTARG};;
+    a) AUTH_HEADER=${OPTARG};;
   esac
 done
 
@@ -67,8 +67,8 @@ checkout() {
     fi
     git --git-dir=$2/.git --work-tree=$2 fetch
   else
-    if [[ $HTTP ]]; then
-      git clone "https://github.com:$1/$2.git"
+    if [[ $AUTH_HEADER ]]; then
+      git -c http.extraheader="AUTHORIZATION: bearer $AUTH_HEADER" clone "https://github.com:$1/$2.git"
     else
       git clone "git@github.com:$1/$2.git"
     fi
