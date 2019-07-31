@@ -4,7 +4,7 @@
 # eval `ssh-agent`
 # ssh-add ~/.ssh/id_rsa
 
-while getopts hr:b:fcm:a: option
+while getopts hr:b:fcm:a option
 do
   case "${option}"
     in
@@ -19,6 +19,7 @@ do
 done
 
 echo "Script root catalogue [$ROOT]"
+echo "GIT branch name [$BRANCH]"
 
 if [[ $FORCE ]]; then
   while true; do
