@@ -6,14 +6,18 @@ clone all repositories and install artifacts to Maven local / Maven Central Snap
 Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option
 for help.
 
-## Build all repositories
-Check a `development/build-all.sh` script to build all cloned repositories. Please check `-h` option
+## Build Stack
+Check a `development/build-stack.sh` script to build all cloned repositories. Please check `-h` option
 for help.
 
 Please note that the `knotx-stack` repository contains
 [Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) definition.
 The repository allows to re-build all Knot.x modules and use them during integration tests, bypassing the
 need to publish artifacts to the maven repository first.
+
+## Build Stack & Docker & Starter-Kit
+
+// TODO
 
 ## Use cases
 After cloning the repository on Unix please change permissions:
@@ -27,14 +31,14 @@ $>chmod -R 755 knotx-aggregator/**/*.sh
 From `development` directory run:
 ```
 $>./pull-all.sh -r projects/knotx -b feature/my-changes -m origin/master
-$>./build-all.sh -r projects/knotx
+$>./build-stack.sh -r projects/knotx
 ```
 
 ### Deploy all to Maven Central SNAPSHOT repository
 From `development` directory run:
 ```
 $>./pull-all.sh -r projects/knotx -b master -f
-$>./build-all.sh -r projects/knotx -d
+$>./build-stack.sh -r projects/knotx -d
 ```
 
 # Release process
