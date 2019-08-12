@@ -50,7 +50,7 @@ build_with_maven () {
 ############################
 #      Gradle build        #
 ############################
-build_with_gradle () {
+build_composite_with_gradle () {
   # $1 root folder
   # $2 deploy
   echo "***************************************"
@@ -76,6 +76,7 @@ cd ${ROOT}
 touch ${ROOT}/knotx-stack/.composite-enabled
 
 build_with_maven `echo "knotx-dependencies" | cut -d';' -f2` $DEPLOY
-build_with_gradle `echo "knotx-stack" | cut -d';' -f2` $DEPLOY
+knotx-gradle-plugins/gradlew -p knotx-gradle-plugins publishToMavenLocal; fail_fast_build $? true
+build_composite_with_gradle `echo "knotx-stack" | cut -d';' -f2` $DEPLOY
 
 echo "Finished!"
