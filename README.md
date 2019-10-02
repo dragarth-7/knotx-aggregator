@@ -4,7 +4,8 @@ clone all repositories and install artifacts to Maven local / Maven Central Snap
 
 ## Clone all repositories
 Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option
-for help.
+for help. Execute this script from `knotx-aggregator/development` directory, executing it from another 
+directory will fail.
 
 ## Build Stack
 Check a `development/build-stack.sh` script to build all cloned repositories. Please check `-h` option
