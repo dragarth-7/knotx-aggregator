@@ -2,19 +2,39 @@
 This section describes tools that help you with coding. We provide scripts that allows to
 clone all repositories and install artifacts to Maven local / Maven Central Snapshot repositories.
 
+## Prerequisites on Windows
+- Install and configure WSL - Windows Subsystem for Linux - it's really necessary, without it 
+Knot.x development on Windows machine will be almost impossible 
+- Install Java 8 on WSL
+- Install Gradle globally
+
 ## Clone all repositories
 Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option
 for help. Execute this script from `knotx-aggregator/development` directory, executing it from another 
-directory will fail.
+directory will fail. Please check `-r` option for providing custom directory where Knot.x repositories 
+will be cloned, for example `sh pull-all.sh -r ../../knotx` make sure, that provided directory exists. 
 
 ## Build Stack
 Check a `development/build-stack.sh` script to build all cloned repositories. Please check `-h` option
-for help.
+for help. This command should also be executed from `knotx-aggregator/development` directory, in other 
+case it will fail. Please check `-r` option for building Knot.x repositories in custom location, for example
+`sh buils-stack.sh -r ../../knotx` make sure that in the provided directory repositories are properly
+cloned.
 
 Please note that the `knotx-stack` repository contains
 [Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) definition.
 The repository allows to re-build all Knot.x modules and use them during integration tests, bypassing the
 need to publish artifacts to the maven repository first.
+
+After successful build remember to rebuild gradle modules or simply refresh them in your IDE
+
+## Verify if everything is up and running
+From [here](https://github.com/Knotx/knotx-example-project) you can download example Knot.x projects.
+For our training purposes you can use getting-started project which is contained in this repository.
+Navigate to them and build it. Do all the followings from ubuntu terminal. Executing it from Windows Command Prompt
+will fail with high probability. To check if this example projects was built properly, just open link
+listed in the repository. If you will see properly rendered page without errors it means that everything with Knot.x 
+is up and running
 
 ## Build Stack & Docker & Starter-Kit
 
