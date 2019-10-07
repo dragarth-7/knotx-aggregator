@@ -3,10 +3,10 @@ This section describes tools that help you with coding. We provide scripts that 
 clone all repositories and install artifacts to Maven local / Maven Central Snapshot repositories.
 
 ## Prerequisites on Windows
-- Install and configure WSL - Windows Subsystem for Linux - it's really necessary, without it 
-Knot.x development on Windows machine will be almost impossible 
-- Install Java 8 on WSL
-- Install Gradle globally
+Install and configure [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL) and configure:
+- Java 8 on WSL
+- Gradle 5+
+- Maven
 
 ## Clone all repositories
 Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option
@@ -28,11 +28,20 @@ need to publish artifacts to the maven repository first.
 
 After successful build remember to rebuild gradle modules or simply refresh them in your IDE
 
-## Verify if everything is up and running
+## Run Stack
 From [here](https://github.com/Knotx/knotx-example-project) you can download example Knot.x projects.
-For our training purposes you can use getting-started project which is contained in this repository.
-Navigate to them and build it. Do all the followings from ubuntu terminal. Executing it from Windows Command Prompt
-will fail with high probability. To check if this example projects was built properly, just open link
+Let's use `getting-started` project which is contained in this repository as an example.
+Navigate to the project directory and build it 
+```
+gradlew clean build
+``` 
+After successful build you'll find zip archive `knotx-stack-2.0.0-SNAPSHOT.zip` under `./build/distributions`. Unzip it
+and navigate to `knotx` directory. From there execute command 
+```
+chmod +x bin/knotx
+bin/knotx run-knotx
+```
+To check if this example projects was built properly, just open [link](http://localhost:8092/content/books.html)
 listed in the repository. If you will see properly rendered page without errors it means that everything with Knot.x 
 is up and running
 
