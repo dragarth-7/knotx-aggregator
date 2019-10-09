@@ -75,6 +75,7 @@ Check it running `docker images knotx/knotx` (note `X.X.X-SNAPSHOT` should corre
 There are 2 distributions that `Knot.x Starter-Kit` builds:
 - `ZIP`,
 - `Docker image`.
+
 You can find more details in the [Starter Kit repository README](https://github.com/Knotx/knotx-starter-kit).
 After [cloning all Knot.x repositories](#clone-all-knotx-repositories) you can find Starter Kit in the
 `$KNOTX/knotx-starter-kit`. Navigate to this repository now and follow the instructions from the 
