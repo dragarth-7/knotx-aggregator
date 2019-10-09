@@ -11,13 +11,13 @@ Install and configure [Windows Subsystem for Linux](https://docs.microsoft.com/e
 ## Clone all repositories
 Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option
 for help. Execute this script from `knotx-aggregator/development` directory, executing it from another 
-directory will fail. Please check `-r` option for providing custom directory where Knot.x repositories 
-will be cloned, for example `sh pull-all.sh -r ../../knotx` make sure, that provided directory exists. 
+directory will fail. The `-r` option specifies directory where all Knot.x repositories 
+are cloned such as `sh pull-all.sh -r ../../knotx` make sure, that provided directory exists. 
 
 ## Build Stack
 Check a `development/build-stack.sh` script to build all cloned repositories. Please check `-h` option
-for help. This command should also be executed from `knotx-aggregator/development` directory, in other 
-case it will fail. Please check `-r` option for building Knot.x repositories in custom location, for example
+for help. Execute this command from `knotx-aggregator/development` directory.
+Specify the `-r` parameter to point the directory with cloned repositories, for example
 `sh buils-stack.sh -r ../../knotx` make sure that in the provided directory repositories are properly
 cloned.
 
@@ -26,7 +26,9 @@ Please note that the `knotx-stack` repository contains
 The repository allows to re-build all Knot.x modules and use them during integration tests, bypassing the
 need to publish artifacts to the maven repository first.
 
-After successful build remember to rebuild gradle modules or simply refresh them in your IDE
+The `build-all.sh` command deploys the [Knot.x BOM file](https://github.com/Knotx/knotx-dependencies) 
+(Bill Of Materials) to the local Maven repository first. The BOM file specifies external dependencies, such as used Vert.x 
+version etc. Then all modules are rebuilt. After the execution, please refresh your IDE.
 
 ## Run Stack
 From [here](https://github.com/Knotx/knotx-example-project) you can download example Knot.x projects.
@@ -35,8 +37,9 @@ Navigate to the project directory and build it
 ```
 gradlew clean build
 ``` 
-After successful build you'll find zip archive `knotx-stack-2.0.0-SNAPSHOT.zip` under `./build/distributions`. Unzip it
-and navigate to `knotx` directory. From there execute command 
+After successful build you'll find zip archive `knotx-stack-2.0.0-SNAPSHOT.zip` under `./build/distributions`. Take into 
+account that, `knotx-stack` version may be different in the future. Unzip it and navigate to `knotx` directory. 
+From there execute command 
 ```
 chmod +x bin/knotx
 bin/knotx run-knotx
