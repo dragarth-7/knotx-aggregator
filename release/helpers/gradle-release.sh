@@ -12,7 +12,7 @@ gradle_start_release() {
 
   # Release
   # knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal
-  knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal publish
+  knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal publish -Dorg.gradle.internal.http.socketTimeout=60000 -Dorg.gradle.internal.http.connectionTimeout=60000
 
   git_commit_and_create_tag $project $version
   echo "************************************************************"
