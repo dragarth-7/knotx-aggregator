@@ -1,45 +1,120 @@
 # Development process
-This section describes tools that help you with coding. We provide scripts that allows to
-clone all repositories and install artifacts to Maven local / Maven Central Snapshot repositories.
+This repository contains scripts that help to manage and develop Knot.x project and its GitHub repositories.
+Below you will find instructions on how to setup local Knot.x developer's e environment and build:
+- [Knot.x Stack](https://github.com/Knotx/knotx-stack) - a way of distributing a fully functional bootstrap project for Knot.x-based solutions.
+- [Knot.x Docker Image](https://github.com/Knotx/knotx-docker) - which is a base image for Knot.x solutions using the Docker `FROM` directive.   
+- [Knot.x Starter-Kit](https://github.com/Knotx/knotx-starter-kit) - a template project that you can use when creating Knot.x extensions. 
 
-## Clone all repositories
-Check a `development/pull-all.sh` script to clone all Knot.x repositories. Please check `-h` option
-for help.
+## Prerequisites
+Before proceeding make sure you have installed:
+- Java 8
+- Gradle 5+
+- Maven 3.2+
+- (optionally) Your favourite IDE - we will use IntelliJ for the purpose of these instructions
+- (optionally) Docker installed (if you intend to build Knot.x Docker images)
 
-## Build Stack
-Check a `development/build-stack.sh` script to build all cloned repositories. Please check `-h` option
-for help.
+If you are a Windows user, please install and configure [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL).
+Scripts in that repository are designed to be used on Linux-based platforms.
 
-Please note that the `knotx-stack` repository contains
-[Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) definition.
-The repository allows to re-build all Knot.x modules and use them during integration tests, bypassing the
-need to publish artifacts to the maven repository first.
+## Setup developer environment
+Start with cloning this repository into your workspace. Let's call it `$KNOTX`.
 
-## Build Stack & Docker & Starter-Kit
+### Clone all Knot.x repositories
+From the `$KNOTX/knotx-aggregator/development` directory run:
 
-// TODO
+```bash
+./pull-all.sh -r ../../ -b master
+```
+
+This will pull all Knot.x repositories into `$KNOTX` root and checkout default `master` branch.
+The `-r` option specifies the directory where all Knot.x repositories are cloned (which is `$KNOTX`).
+Check `./pull-all.sh -h` option for help. 
+
+> Note:
+> Execute all scripts from `knotx-aggregator/development` directory, executing them from another 
+directory will fail.
+
+### Setup IDE
+> This step is optional
+ 
+Now as you have all repositories cloned (make sure by running `ls -al` form `$KNOTX`) you may setup your IDE.
+The easiest way to do it is to enter `$KNOTX/knotx-stack` and run `idea .`. 
+That will spawn IntelliJ prompt window that will ask you on project import details. After a couple of minutes (importing
+all modules make take some time) you should end with configured Knot.x project.
+
+> Note:
+> `knotx-stack` repository contains [Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) definition.
+> The repository allows you to re-build all Knot.x modules and use them during integration tests, bypassing the
+  need to publish artifacts to the maven repository first.
+
+### Build Stack
+From the `$KNOTX/knotx-aggregator/development` directory run:
+
+```bash
+./build-stack.sh -r ../../
+```
+The `-r` option points to the directory where all Knot.x repositories were cloned (which is `$KNOTX`).
+Check `-h` option for help. 
+
+The `build-stack.sh` command deploys the [Knot.x BOM file](https://github.com/Knotx/knotx-dependencies) 
+(Bill Of Materials) to the local Maven repository first. The BOM file specifies external dependencies, such as used Vert.x 
+version etc. Then all modules are rebuilt. After the execution, please refresh your IDE.
+
+### Build Docker Image
+Now, when you have [Knot.x Stack](https://github.com/Knotx/knotx-stack) built and deployed to your local M2 repo,
+you may build a base docker image.
+Navigate to `$KNOTX/knotx-docker` and run:
+```bash
+mvn clean install
+```
+
+After a successful build, you should have `knotx/knotx:X.X.X-SNAPSHOT` image in your local Docker images repository.
+Check it running `docker images knotx/knotx` (note `X.X.X-SNAPSHOT` should correspond to the current SNAPSHOT version of Knot.x Stack).
+
+### Build Starter-Kit
+There are 2 distributions that `Knot.x Starter-Kit` builds:
+- `ZIP`,
+- `Docker image`.
+
+You can find more details in the [Starter Kit repository README](https://github.com/Knotx/knotx-starter-kit).
+After [cloning all Knot.x repositories](#clone-all-knotx-repositories) you can find Starter Kit in the
+`$KNOTX/knotx-starter-kit`. Navigate to this repository now and follow the instructions from the 
+[Starter Kit repository README](https://github.com/Knotx/knotx-starter-kit) to build desired distributions.
+
+> Note that you need to build [Docker Image](#build-docker-image) if you want to use Docker image distribution.
+> Otherwise, building [Stack](#build-stack) is sufficient.
+
+## Run Knot.x instance using Knot.x Stack
+There is a detailed tutorial on how to run Knot.x instance using the Stack:
+- http://knotx.io/tutorials/getting-started-with-knotx-stack
+That base on the released Knot.x version. If you [have built the Stack](#build-stack) you may use the `SNAPSHOT` version instead.
 
 ## Use cases
-After cloning the repository on Unix please change permissions:
+> Note: after cloning the repository please make sure all bash files have proper permissions.
+> If not, please run:
 
 ```
 $>git clone git@github.com:Knotx/knotx-aggregator.git
 $>chmod -R 755 knotx-aggregator/**/*.sh
 ```
 
-### Install my changes to M2 repository
-From `development` directory run:
+### Checkout and build all repositories for a specific branch
+> This option is useful if you are working on a cross-repository feature
+
+From `knotx-aggregator/development` run:
 ```
-$>./pull-all.sh -r projects/knotx -b feature/my-changes -m origin/master
+$>./pull-all.sh -r ../../ -b feature/my-changes -m origin/master
 $>./build-stack.sh -r projects/knotx
 ```
 
 ### Deploy all to Maven Central SNAPSHOT repository
-From `development` directory run:
+From `knotx-aggregator/development` run:
 ```
-$>./pull-all.sh -r projects/knotx -b master -f
+$>./pull-all.sh -r ../../ -b master -f
 $>./build-stack.sh -r projects/knotx -d
 ```
+
+> Note: `-f` flag will force-remove all changes in all Knot.x repositories. Make sure you don't have uncommitted changes.
 
 # Release process
 This section describes release process.
