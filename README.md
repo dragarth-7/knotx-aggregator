@@ -61,11 +61,10 @@ The `build-stack.sh` command deploys the [Knot.x BOM file](https://github.com/Kn
 version etc. Then all modules are rebuilt. After the execution, please refresh your IDE.
 
 ### Build Docker Image
-Now, when you have [Knot.x Stack](https://github.com/Knotx/knotx-stack) built and deployed to your local M2 repo,
-you may build a base docker image.
-Navigate to `$KNOTX/knotx-docker` and run:
+To build [Knot.x Base Docker image](https://github.com/Knotx/knotx-docker) run `build-stack.sh` with `-i` (image) flag.
+
 ```bash
-mvn clean install
+./build-stack.sh -r ../../ -i
 ```
 
 After a successful build, you should have `knotx/knotx:X.X.X-SNAPSHOT` image in your local Docker images repository.
