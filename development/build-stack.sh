@@ -66,7 +66,7 @@ build_composite_with_gradle () {
   if [[ $2 ]]; then
     $1/gradlew -p $1 publish-all; fail_fast_build $? $1
   else
-    $1/gradlew -p $1 publish-local-all; fail_fast_build $? $1
+    $1/gradlew -p $1 --info --rerun-tasks publish-local-all; fail_fast_build $? $1
   fi
 }
 
