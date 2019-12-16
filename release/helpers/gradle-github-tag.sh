@@ -9,6 +9,7 @@ gradle_github_tag() {
   # TODO fix to change only when line starts with 'version'
   # gsed -i "/version/c version=${version}" knotx-repos/${project}/gradle.properties
   gsed -i "/knotx.version/c knotx.version=${version}" knotx-repos/${project}/gradle.properties
+  update_changelog $project $version
 
   git_commit_and_create_tag $project $version
   echo "************************************************************"
