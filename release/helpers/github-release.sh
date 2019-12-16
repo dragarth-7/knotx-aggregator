@@ -6,5 +6,5 @@ update_changelog() {
 
   gsed -i '/List of changes that are finished but not yet released in any final version./a \
 \
-## Version '"${version}"'' knotx-repos/${project}/CHANGELOG.md
+## '"${version}"'' knotx-repos/${project}/CHANGELOG.md
 }
