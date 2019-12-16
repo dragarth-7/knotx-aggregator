@@ -216,3 +216,16 @@ Run:
   - `index` version
   - produce `blog/release-VERSION/` page that consists of all `CHANGELOG.md` changes for every module
   - deploy `SNAPSHOT` versions after release to make development of new versions possible and satisfy failing travis
+
+# CI / CD
+Knot.x uses [Azure Pipelines](https://dev.azure.com/knotx/Knotx/_build) to verify commits. Each
+repository contains an `azure-pipelines.yml` configuration file that contains details about build and 
+verification steps. Each time there is a change in `master` repository or some contributor starts 
+the new PR then Azure job starts.
+
+The `azure-pipelines.yml` file is the same across all repositories. So we use Aggregator to update 
+it in all places. From the repository `azure` directory execute following commands:
+```bash
+./update.sh
+```
+to copy `./azure-pipelines.yml` to all repositories, commit and push. 
