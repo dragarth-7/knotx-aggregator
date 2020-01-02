@@ -6,6 +6,7 @@ CURRENT_DIR="$(dirname "${0}")/"
 # ToDo - better way to manage scripts includes
 . "$CURRENT_DIR"helpers/git-release.sh
 . "$CURRENT_DIR"helpers/github-release.sh
+. "$CURRENT_DIR"helpers/gradle-github-tag.sh
 . "$CURRENT_DIR"helpers/maven-release.sh
 . "$CURRENT_DIR"helpers/gradle-release.sh
 . "$CURRENT_DIR"helpers/misc.sh
@@ -33,12 +34,18 @@ do
 
   if [[ -f "knotx-repos/$project/pom.xml" ]]; then
     operation="Releasing Maven repo $project"
-    echo "$opeartion"
+    echo "$operation"
     maven_start_release $project ${VERSION}; fail_fast_operation $? "$operation"
   else
-    operation="Releasing Gradle repo $project"
-    echo "$opeartion"
-    gradle_start_release $project ${VERSION}; fail_fast_operation $? "$operation"
+    if grep -q "releasable=false" "knotx-repos/${project}/gradle.properties"; then
+      operation="Tagging repo $project"
+      echo "$operation"
+      gradle_github_tag $project ${VERSION}; fail_fast_operation $? "$operation"
+    else
+      operation="Releasing Gradle repo $project"
+      echo "$operation"
+      gradle_start_release $project ${VERSION}; fail_fast_operation $? "$operation"
+    fi
   fi
 
   echo "______________________________________________________________________"

@@ -8,10 +8,9 @@ gradle_start_release() {
 
   # Set release version
   gradle_set_project_version $project $version
-#  update_changelog $project $version
+  update_changelog $project $version
 
   # Release
-  # knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal
   knotx-repos/${project}/gradlew -p knotx-repos/${project} publishToMavenLocal publish -Dorg.gradle.internal.http.socketTimeout=60000 -Dorg.gradle.internal.http.connectionTimeout=60000
 
   git_commit_and_create_tag $project $version
