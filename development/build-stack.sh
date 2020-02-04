@@ -87,7 +87,6 @@ build_docker_with_maven () {
 cd ${ROOT}
 touch ${ROOT}/knotx-stack/.composite-enabled
 
-build_with_maven `echo "knotx-dependencies" | cut -d';' -f2` $DEPLOY
 knotx-gradle-plugins/gradlew -p knotx-gradle-plugins publishToMavenLocal; fail_fast_build $? true
 build_composite_with_gradle `echo "knotx-stack" | cut -d';' -f2` $DEPLOY
 

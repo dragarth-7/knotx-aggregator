@@ -56,9 +56,7 @@ From the `$KNOTX/knotx-aggregator/development` directory run:
 The `-r` option points to the directory where all Knot.x repositories were cloned (which is `$KNOTX`).
 Check `-h` option for help. 
 
-The `build-stack.sh` command deploys the [Knot.x BOM file](https://github.com/Knotx/knotx-dependencies) 
-(Bill Of Materials) to the local Maven repository first. The BOM file specifies external dependencies, such as used Vert.x 
-version etc. Then all modules are rebuilt. After the execution, please refresh your IDE.
+The `build-stack.sh` command deploys all Knot.x artifacts to the local Maven repository.
 
 ### Build Docker Image
 To build [Knot.x Base Docker image](https://github.com/Knotx/knotx-docker) run `build-stack.sh` with `-i` (image) flag.
@@ -105,15 +103,6 @@ From `knotx-aggregator/development` run:
 $>./pull-all.sh -r ../../ -b feature/my-changes -m origin/master
 $>./build-stack.sh -r projects/knotx
 ```
-
-### Deploy all to Maven Central SNAPSHOT repository
-From `knotx-aggregator/development` run:
-```
-$>./pull-all.sh -r ../../ -b master -f
-$>./build-stack.sh -r projects/knotx -d
-```
-
-> Note: `-f` flag will force-remove all changes in all Knot.x repositories. Make sure you don't have uncommitted changes.
 
 # Release process
 This section describes release process.
